@@ -10,7 +10,10 @@ export async function dispatchWebhook(url, payload, options = {}) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (res.ok) return res;
+      if (res.ok) {
+        attempt = 0;
+        return res;
+      }
       lastError = new Error(`Webhook responded with status ${res.status}`);
     } catch (err) {
       lastError = err;
